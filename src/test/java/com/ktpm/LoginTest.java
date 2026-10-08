@@ -432,6 +432,40 @@ public class LoginTest {
         }
     }
 
+    @io.qameta.allure.Epic("Văn phòng điện tử UTC")
+    @io.qameta.allure.Feature("Kiểm thử Bảo mật")
+    @io.qameta.allure.Story("TC14: Kiểm thử tấn công XSS ở ô username")
+    @io.qameta.allure.Severity(io.qameta.allure.SeverityLevel.CRITICAL)
+    @org.testng.annotations.Test(priority = 14, description = "TC14: Kiểm thử tấn công XSS ở ô username")
+    public void testTC14_XssInjectionUsername() {
+        String testId = "TC14";
+        String testName = "Kiểm thử tấn công XSS ở ô username";
+        String inputData = "username: '<script>alert(\\'XSS\\')</script>', password: 'password123'";
+        String expected = "Hệ thống không thực thi script, không bật alert XSS, báo lỗi an toàn";
+        String actual = "";
+        String status = "FAIL";
+
+        try {
+            loginPage.enterUsername("<script>alert('XSS')</script>");
+            Thread.sleep(600);
+            loginPage.enterPassword("password123");
+            Thread.sleep(600);
+            loginPage.clickLogin();
+            Thread.sleep(1200);
+
+            boolean hasAlert = loginPage.isAlertPresent();
+            org.testng.Assert.assertFalse(hasAlert, "LỖI BẢO MẬT: Mã script XSS đã bị thực thi trên trình duyệt!");
+
+            actual = "Hệ thống chặn script thành công: " + loginPage.getErrorMessage();
+            status = "PASS";
+        } catch (Throwable t) {
+            actual = actual.isEmpty() ? ("Lỗi: " + t.getMessage()) : actual;
+            throw new RuntimeException(t);
+        } finally {
+            testResults.add(new TestCaseResult(testId, testName, inputData, expected, actual, status, java.time.LocalTime.now().format(TIME_FMT)));
+        }
+    }
+
     @AfterMethod
     public void tearDown() {
         if (driver != null) {

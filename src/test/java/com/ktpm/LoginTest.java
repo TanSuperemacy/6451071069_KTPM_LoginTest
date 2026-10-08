@@ -213,6 +213,35 @@ public class LoginTest {
         }
     }
 
+    @io.qameta.allure.Epic("Văn phòng điện tử UTC")
+    @io.qameta.allure.Feature("Kiểm thử Đăng nhập")
+    @io.qameta.allure.Story("TC7: Để trống cả user và pass word")
+    @io.qameta.allure.Severity(io.qameta.allure.SeverityLevel.NORMAL)
+    @org.testng.annotations.Test(priority = 7, description = "TC7: Để trống cả user và pass word")
+    public void testTC7_EmptyUsernameAndPassword() {
+        String testId = "TC7";
+        String testName = "Để trống cả user và pass word";
+        String inputData = "username: '', password: ''";
+        String expected = "Bạn chưa nhập tên đăng nhập (hoặc Bạn chưa nhập tên đăng nhập và mật khẩu)";
+        String actual = "";
+        String status = "FAIL";
+
+        try {
+            loginPage.clickLogin();
+            Thread.sleep(1200);
+
+            actual = loginPage.getErrorMessage();
+            org.testng.Assert.assertTrue(actual.contains("tên đăng nhập") || actual.contains("chưa nhập"),
+                    "Không hiển thị thông báo lỗi khi để trống cả username và password!");
+            status = "PASS";
+        } catch (Throwable t) {
+            actual = actual.isEmpty() ? ("Lỗi: " + t.getMessage()) : actual;
+            throw new RuntimeException(t);
+        } finally {
+            testResults.add(new TestCaseResult(testId, testName, inputData, expected, actual, status, java.time.LocalTime.now().format(TIME_FMT)));
+        }
+    }
+
     @AfterMethod
     public void tearDown() {
         if (driver != null) {

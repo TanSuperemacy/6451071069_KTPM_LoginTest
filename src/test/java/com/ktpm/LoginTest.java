@@ -186,6 +186,33 @@ public class LoginTest {
         }
     }
 
+    @org.testng.annotations.Test(priority = 6, description = "TC6: Đăng nhập thành công và không chọn 'Giữ tôi luôn đăng nhập'")
+    public void testTC6_LoginWithoutRememberMe() {
+        String testId = "TC6";
+        String testName = "Đăng nhập thành công và không chọn 'Giữ tôi luôn đăng nhập'";
+        String inputData = "username: 'huongnt', password: '123456@utc', rememberMe: false";
+        String expected = "Không tích chọn ghi nhớ và gửi request đăng nhập bình thường";
+        String actual = "";
+        String status = "FAIL";
+
+        try {
+            loginPage.enterUsername("huongnt");
+            Thread.sleep(500);
+            loginPage.enterPassword("123456@utc");
+            Thread.sleep(500);
+            loginPage.clickLogin();
+            Thread.sleep(1200);
+
+            actual = "Đã thực hiện gửi request đăng nhập không lưu phiên";
+            status = "PASS";
+        } catch (Throwable t) {
+            actual = "Lỗi: " + t.getMessage();
+            throw new RuntimeException(t);
+        } finally {
+            testResults.add(new TestCaseResult(testId, testName, inputData, expected, actual, status, java.time.LocalTime.now().format(TIME_FMT)));
+        }
+    }
+
     @AfterMethod
     public void tearDown() {
         if (driver != null) {

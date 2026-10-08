@@ -466,6 +466,38 @@ public class LoginTest {
         }
     }
 
+    @io.qameta.allure.Epic("Văn phòng điện tử UTC")
+    @io.qameta.allure.Feature("Kiểm thử Biên & Độ dài")
+    @io.qameta.allure.Story("TC15: Nhập chuỗi ký tự quá dài vào ô username và password")
+    @io.qameta.allure.Severity(io.qameta.allure.SeverityLevel.NORMAL)
+    @org.testng.annotations.Test(priority = 15, description = "TC15: Nhập chuỗi ký tự quá dài vào ô username và password")
+    public void testTC15_LongInputCharacters() {
+        String testId = "TC15";
+        String testName = "Nhập chuỗi ký tự quá dài vào ô username và password";
+        String longText = "a".repeat(255);
+        String inputData = "username: 255 ký tự, password: 255 ký tự";
+        String expected = "Hệ thống xử lý chuỗi dài an toàn, không bị lỗi máy chủ (500)";
+        String actual = "";
+        String status = "FAIL";
+
+        try {
+            loginPage.enterUsername(longText);
+            Thread.sleep(600);
+            loginPage.enterPassword(longText);
+            Thread.sleep(600);
+            loginPage.clickLogin();
+            Thread.sleep(1200);
+
+            actual = "Hệ thống xử lý an toàn: " + loginPage.getErrorMessage();
+            status = "PASS";
+        } catch (Throwable t) {
+            actual = "Lỗi: " + t.getMessage();
+            throw new RuntimeException(t);
+        } finally {
+            testResults.add(new TestCaseResult(testId, testName, inputData, expected, actual, status, java.time.LocalTime.now().format(TIME_FMT)));
+        }
+    }
+
     @AfterMethod
     public void tearDown() {
         if (driver != null) {

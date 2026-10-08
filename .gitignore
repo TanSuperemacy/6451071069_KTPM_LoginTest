@@ -30,3 +30,8 @@ out/
 
 # Logs & temp
 *.log
+
+# Allure CLI & reports
+.allure/
+allure-results/
+allure-report/

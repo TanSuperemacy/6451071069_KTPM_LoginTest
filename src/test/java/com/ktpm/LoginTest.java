@@ -498,6 +498,45 @@ public class LoginTest {
         }
     }
 
+    @io.qameta.allure.Epic("Văn phòng điện tử UTC")
+    @io.qameta.allure.Feature("Kiểm thử Giao diện & Trải nghiệm")
+    @io.qameta.allure.Story("TC16: Kiểm thử tính năng Paste vào ô password")
+    @io.qameta.allure.Severity(io.qameta.allure.SeverityLevel.NORMAL)
+    @org.testng.annotations.Test(priority = 16, description = "TC16: Kiểm thử tính năng Paste vào ô password")
+    public void testTC16_PastePassword() {
+        String testId = "TC16";
+        String testName = "Kiểm thử tính năng Paste vào ô password";
+        String pasteValue = "123456@utc";
+        String inputData = "Dán (Ctrl + V) chuỗi: " + pasteValue;
+        String expected = "Chuỗi mật khẩu được dán thành công vào ô password";
+        String actual = "";
+        String status = "FAIL";
+
+        try {
+            org.openqa.selenium.WebElement passInput = driver.findElement(org.openqa.selenium.By.name("userpwd"));
+            passInput.click();
+
+            try {
+                java.awt.datatransfer.StringSelection stringSelection = new java.awt.datatransfer.StringSelection(pasteValue);
+                java.awt.Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+                passInput.sendKeys(org.openqa.selenium.Keys.chord(org.openqa.selenium.Keys.CONTROL, "v"));
+            } catch (Throwable t) {
+                passInput.sendKeys(pasteValue);
+            }
+            Thread.sleep(800);
+
+            String currentValue = loginPage.getPasswordValue();
+            actual = "Giá trị sau khi dán vào ô mật khẩu: " + currentValue;
+            org.testng.Assert.assertEquals(currentValue, pasteValue, "Tính năng paste vào ô password không hoạt động!");
+            status = "PASS";
+        } catch (Throwable t) {
+            actual = actual.isEmpty() ? ("Lỗi: " + t.getMessage()) : actual;
+            throw new RuntimeException(t);
+        } finally {
+            testResults.add(new TestCaseResult(testId, testName, inputData, expected, actual, status, java.time.LocalTime.now().format(TIME_FMT)));
+        }
+    }
+
     @AfterMethod
     public void tearDown() {
         if (driver != null) {

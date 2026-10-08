@@ -242,6 +242,39 @@ public class LoginTest {
         }
     }
 
+    @io.qameta.allure.Epic("Văn phòng điện tử UTC")
+    @io.qameta.allure.Feature("Kiểm thử Bảo mật")
+    @io.qameta.allure.Story("TC8: Kiểm thử tấn công SQL Injection ở ô username")
+    @io.qameta.allure.Severity(io.qameta.allure.SeverityLevel.CRITICAL)
+    @org.testng.annotations.Test(priority = 8, description = "TC8: Kiểm thử tấn công SQL Injection ở ô username")
+    public void testTC8_SqlInjectionUsername() {
+        String testId = "TC8";
+        String testName = "Kiểm thử tấn công SQL Injection ở ô username";
+        String inputData = "username: '' OR '1'='1', password: '123'";
+        String expected = "Hệ thống chặn truy cập, báo lỗi Tài khoản hoặc mật khẩu không đúng.";
+        String actual = "";
+        String status = "FAIL";
+
+        try {
+            loginPage.enterUsername("' OR '1'='1");
+            Thread.sleep(600);
+            loginPage.enterPassword("123");
+            Thread.sleep(600);
+            loginPage.clickLogin();
+            Thread.sleep(1200);
+
+            actual = loginPage.getErrorMessage();
+            org.testng.Assert.assertTrue(actual.contains("không đúng") || actual.contains("Tài khoản"),
+                    "Hệ thống không chặn được tấn công SQL Injection!");
+            status = "PASS";
+        } catch (Throwable t) {
+            actual = actual.isEmpty() ? ("Lỗi: " + t.getMessage()) : actual;
+            throw new RuntimeException(t);
+        } finally {
+            testResults.add(new TestCaseResult(testId, testName, inputData, expected, actual, status, java.time.LocalTime.now().format(TIME_FMT)));
+        }
+    }
+
     @AfterMethod
     public void tearDown() {
         if (driver != null) {

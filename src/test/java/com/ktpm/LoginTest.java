@@ -403,6 +403,35 @@ public class LoginTest {
         }
     }
 
+    @io.qameta.allure.Epic("Văn phòng điện tử UTC")
+    @io.qameta.allure.Feature("Kiểm thử Giao diện & Trải nghiệm")
+    @io.qameta.allure.Story("TC13: Kiểm thử ẩn/hiện ký tự ở ô mật khẩu")
+    @io.qameta.allure.Severity(io.qameta.allure.SeverityLevel.NORMAL)
+    @org.testng.annotations.Test(priority = 13, description = "TC13: Kiểm thử ẩn/hiện ký tự ở ô mật khẩu")
+    public void testTC13_MaskedPasswordInput() {
+        String testId = "TC13";
+        String testName = "Kiểm thử ẩn/hiện ký tự ở ô mật khẩu";
+        String inputData = "password: 'MySecretPassword123'";
+        String expected = "Ô mật khẩu có thuộc tính type='password' để ẩn ký tự dạng dấu chấm/sao";
+        String actual = "";
+        String status = "FAIL";
+
+        try {
+            loginPage.enterPassword("MySecretPassword123");
+            Thread.sleep(600);
+
+            String inputType = loginPage.getPasswordInputType();
+            actual = "Thuộc tính type của ô mật khẩu là: " + inputType;
+            org.testng.Assert.assertEquals(inputType, "password", "Ô mật khẩu không được ẩn ký tự (không phải type='password')!");
+            status = "PASS";
+        } catch (Throwable t) {
+            actual = actual.isEmpty() ? ("Lỗi: " + t.getMessage()) : actual;
+            throw new RuntimeException(t);
+        } finally {
+            testResults.add(new TestCaseResult(testId, testName, inputData, expected, actual, status, java.time.LocalTime.now().format(TIME_FMT)));
+        }
+    }
+
     @AfterMethod
     public void tearDown() {
         if (driver != null) {

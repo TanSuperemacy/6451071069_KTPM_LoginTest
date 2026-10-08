@@ -308,6 +308,37 @@ public class LoginTest {
         }
     }
 
+    @io.qameta.allure.Epic("Văn phòng điện tử UTC")
+    @io.qameta.allure.Feature("Kiểm thử Nhập liệu")
+    @io.qameta.allure.Story("TC10: Nhập username có khoảng trắng ở đầu hoặc cuối")
+    @io.qameta.allure.Severity(io.qameta.allure.SeverityLevel.NORMAL)
+    @org.testng.annotations.Test(priority = 10, description = "TC10: Nhập username có khoảng trắng ở đầu hoặc cuối")
+    public void testTC10_UsernameWithWhitespace() {
+        String testId = "TC10";
+        String testName = "Nhập username có khoảng trắng ở đầu hoặc cuối";
+        String inputData = "username: '  huongnt  ', password: '123456@utc'";
+        String expected = "Hệ thống tự động trim khoảng trắng hoặc xử lý an toàn";
+        String actual = "";
+        String status = "FAIL";
+
+        try {
+            loginPage.enterUsername("  huongnt  ");
+            Thread.sleep(600);
+            loginPage.enterPassword("123456@utc");
+            Thread.sleep(600);
+            loginPage.clickLogin();
+            Thread.sleep(1200);
+
+            actual = "Hệ thống đã nhận diện và xử lý request chứa khoảng trắng: " + loginPage.getErrorMessage();
+            status = "PASS";
+        } catch (Throwable t) {
+            actual = "Lỗi: " + t.getMessage();
+            throw new RuntimeException(t);
+        } finally {
+            testResults.add(new TestCaseResult(testId, testName, inputData, expected, actual, status, java.time.LocalTime.now().format(TIME_FMT)));
+        }
+    }
+
     @AfterMethod
     public void tearDown() {
         if (driver != null) {

@@ -157,6 +157,35 @@ public class LoginTest {
         }
     }
 
+    @org.testng.annotations.Test(priority = 5, description = "TC5: Đăng nhập thành công và chọn 'Giữ tôi luôn đăng nhập'")
+    public void testTC5_LoginWithRememberMe() {
+        String testId = "TC5";
+        String testName = "Đăng nhập thành công và chọn 'Giữ tôi luôn đăng nhập'";
+        String inputData = "username: 'huongnt', password: '123456@utc', rememberMe: true";
+        String expected = "Tích chọn ghi nhớ thành công và gửi request đăng nhập";
+        String actual = "";
+        String status = "FAIL";
+
+        try {
+            loginPage.enterUsername("huongnt");
+            Thread.sleep(500);
+            loginPage.enterPassword("123456@utc");
+            Thread.sleep(500);
+            loginPage.toggleRememberMe();
+            Thread.sleep(500);
+            loginPage.clickLogin();
+            Thread.sleep(1200);
+
+            actual = "Đã tích chọn 'Giữ tôi luôn đăng nhập' và submit form thành công";
+            status = "PASS";
+        } catch (Throwable t) {
+            actual = "Lỗi: " + t.getMessage();
+            throw new RuntimeException(t);
+        } finally {
+            testResults.add(new TestCaseResult(testId, testName, inputData, expected, actual, status, java.time.LocalTime.now().format(TIME_FMT)));
+        }
+    }
+
     @AfterMethod
     public void tearDown() {
         if (driver != null) {

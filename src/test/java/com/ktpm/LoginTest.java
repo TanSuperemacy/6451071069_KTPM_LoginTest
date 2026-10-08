@@ -128,6 +128,35 @@ public class LoginTest {
         }
     }
 
+    @org.testng.annotations.Test(priority = 4, description = "TC4: Sai tên, đúng mật khẩu")
+    public void testTC4_WrongUsernameCorrectPassword() {
+        String testId = "TC4";
+        String testName = "Sai tên, đúng mật khẩu";
+        String inputData = "username: 'huongthunguyen', password: '123456@utc'";
+        String expected = "Tài khoản không đúng (hoặc Tài khoản hoặc mật khẩu không đúng.)";
+        String actual = "";
+        String status = "FAIL";
+
+        try {
+            loginPage.enterUsername("huongthunguyen");
+            Thread.sleep(600);
+            loginPage.enterPassword("123456@utc");
+            Thread.sleep(600);
+            loginPage.clickLogin();
+            Thread.sleep(1200);
+
+            actual = loginPage.getErrorMessage();
+            org.testng.Assert.assertTrue(actual.contains("không đúng") || actual.contains("Tài khoản"),
+                    "Không hiển thị thông báo lỗi khi nhập sai tên đăng nhập!");
+            status = "PASS";
+        } catch (Throwable t) {
+            actual = actual.isEmpty() ? ("Lỗi: " + t.getMessage()) : actual;
+            throw new RuntimeException(t);
+        } finally {
+            testResults.add(new TestCaseResult(testId, testName, inputData, expected, actual, status, java.time.LocalTime.now().format(TIME_FMT)));
+        }
+    }
+
     @AfterMethod
     public void tearDown() {
         if (driver != null) {

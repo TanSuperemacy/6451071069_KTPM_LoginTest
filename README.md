@@ -1,59 +1,59 @@
 # 6451071069_KTPM_LoginTest
 
-Dự án kiểm thử tự động (Automation Testing) tính năng **Đăng nhập (Login)** cho hệ thống **Văn phòng điện tử Trường ĐH Giao Thông Vận Tải (UTC)** sử dụng **Java**, **Selenium WebDriver**, **TestNG**, xuất báo cáo **Excel (.xlsx)** bằng **Apache POI** và báo cáo phân tích số liệu trực quan với **Allure Report**.
+Dự án kiểm thử tự động (Automation Testing) tính năng **Đăng nhập (Login)** cho hệ thống **Văn phòng điện tử Trường ĐH Giao Thông Vận Tải (UTC)** sử dụng **Java**, **Selenium WebDriver**, **TestNG**, xuất báo cáo **Excel (.xlsx)** bằng **Apache POI** và báo cáo phân tích số liệu với **Allure Report**.
 
 ---
 
-## 🌐 Trang web kiểm thử
+## Trang web kiểm thử
 - **Hệ thống:** Văn phòng điện tử UTC
 - **URL:** `https://vanphongdientu.utc.edu.vn/Login`
 
 ---
 
-## 🛠️ Công nghệ & Thư viện sử dụng
+## Công nghệ & Thư viện sử dụng
 - **Ngôn ngữ:** Java 21 (LTS)
-- **Công cụ build:** Apache Maven (đã tích hợp sẵn Maven Wrapper `mvnw`)
+- **Công cụ build:** Apache Maven (Maven Wrapper `mvnw`)
 - **Kiểm thử tự động:** Selenium WebDriver (`v4.27.0`)
 - **Testing Framework:** TestNG (`v7.10.2`)
 - **Báo cáo phân tích:** Allure Report (`v2.29.0`)
 - **Xuất file Excel:** Apache POI (`v5.3.0`)
-- **Thư viện kiểm tra:** AssertJ (`v3.26.3` - Slide 9)
-- **Design Pattern:** Page Object Model (POM) chuẩn mực theo Slide 48
+- **Thư viện kiểm tra:** AssertJ (`v3.26.3`)
+- **Mô hình thiết kế:** Page Object Model (POM)
 
 ---
 
-## 📁 Cấu trúc thư mục dự án chuẩn theo Slide 48
+## Cấu trúc thư mục dự án
 
 ```text
 6451071069_KTPM_LoginTest/
 │
 ├── .mvn/                               # Cấu hình Maven Wrapper
-├── mvnw / mvnw.cmd                     # Script chạy Maven độc lập (không cần cài trước mvn)
-├── pom.xml                             # Cấu hình thư viện (Selenium 4, TestNG, Allure, AssertJ, POI)
-├── KetQuaKiemThu_Login.xlsx            # File báo cáo Excel được tự động tạo sau khi chạy test
+├── mvnw / mvnw.cmd                     # Script chạy Maven độc lập
+├── pom.xml                             # Cấu hình dự án và dependencies
+├── KetQuaKiemThu_Login.xlsx            # File báo cáo kết quả kiểm thử Excel
 ├── testcase.txt                        # Danh sách 16 kịch bản kiểm thử chi tiết
 ├── README.md                           # Tài liệu hướng dẫn dự án
 │
 └── src/test/
     ├── java/com/ktpm/
-    │   ├── base/                       # TẦNG CƠ SỞ (Slide 48)
-    │   │   └── BaseTest.java           # Quản lý WebDriver lifecycle, hỗ trợ Headless (Slide 10, 60)
-    │   ├── pages/                      # CÁC PAGE OBJECTS (Slide 48)
-    │   │   ├── BasePage.java           # Lớp cha giữ WebDriver, Explicit Wait (Slide 49-50)
-    │   │   └── LoginPage.java          # Page Object trang Login UTC kế thừa BasePage (Slide 51-52)
-    │   ├── tests/                      # CÁC TEST SCRIPTS (Slide 48)
-    │   │   └── LoginE2ETest.java       # Bộ 16 Test Cases tuân thủ Explicit Wait, không Thread.sleep (Slide 48, 54, 63)
+    │   ├── base/                       # Quản lý WebDriver và vòng đời kiểm thử
+    │   │   └── BaseTest.java
+    │   ├── pages/                      # Các lớp Page Object theo mô hình POM
+    │   │   ├── BasePage.java           # Lớp cơ sở xử lý wait và tương tác phần tử
+    │   │   └── LoginPage.java          # Page Object cho trang đăng nhập UTC
+    │   ├── tests/                      # Kịch bản kiểm thử
+    │   │   └── LoginE2ETest.java       # Bộ 16 test cases kiểm thử E2E đăng nhập
     │   ├── model/
-    │   │   └── TestCaseResult.java     # Model kết quả kiểm thử
+    │   │   └── TestCaseResult.java     # Model lưu kết quả kiểm thử
     │   └── utils/
-    │       └── ExcelExporter.java      # Tiện ích xuất file Excel (.xlsx) bằng Apache POI
+    │       └── ExcelExporter.java      # Tiện ích xuất báo cáo Excel
     └── resources/
         └── testng.xml                  # Cấu hình Test Suite TestNG
 ```
 
 ---
 
-## 📋 Danh sách 16 Test Cases & Lịch sử Git Commit
+## Danh sách 16 Test Cases & Lịch sử Git Commit
 
 Mỗi Test Case được quản lý độc lập theo từng commit riêng biệt trên Git theo đúng chuẩn quy trình kiểm thử:
 
@@ -78,47 +78,44 @@ Mỗi Test Case được quản lý độc lập theo từng commit riêng biệ
 
 ---
 
-## 📊 1. Báo cáo số liệu với Allure Report
+## 1. Báo cáo số liệu với Allure Report
 
-Dự án đã tích hợp **Allure Report** giúp xem biểu đồ thống kê, tỷ lệ Pass/Fail, thời gian thực thi của từng test case:
+Dự án tích hợp **Allure Report** giúp xem biểu đồ thống kê, tỷ lệ Pass/Fail và thời gian thực thi:
 
 ### Bước 1: Chạy kiểm thử để sinh dữ liệu Allure
 ```powershell
-.\mvnw.cmd test
+.\mvnw.cmd clean test -Dheadless=true
 ```
-*(Dữ liệu kết quả sẽ tự động lưu vào thư mục `target/allure-results`)*
 
-### Bước 2: Bật trang báo cáo Allure Report trên trình duyệt
+### Bước 2: Mở giao diện Allure Report trên trình duyệt
 ```powershell
 .\mvnw.cmd allure:serve
 ```
-> Lệnh này sẽ tự động khởi động một web server nội bộ và mở trang Dashboard của Allure trên trình duyệt (có biểu đồ tròn, timeline và chi tiết từng step của 16 kịch bản).
 
 ---
 
-## 📑 2. Báo cáo kết quả ra file Excel (`KetQuaKiemThu_Login.xlsx`)
-File Excel được tự động tạo/cập nhật ngay tại thư mục gốc với các thông tin:
+## 2. Báo cáo kết quả ra file Excel (KetQuaKiemThu_Login.xlsx)
+File Excel được tự động cập nhật tại thư mục gốc với các thông tin:
 - Tiêu đề báo cáo và thông tin Mã sinh viên: **6451071069**.
 - Chi tiết từng kịch bản, dữ liệu đầu vào, kết quả mong đợi, kết quả thực tế, thời gian chạy.
-- Các ô trạng thái được tô màu trực quan (**PASS** màu xanh lá, **FAIL** màu đỏ).
+- Các ô trạng thái được định dạng màu trực quan (PASS màu xanh, FAIL màu đỏ).
 - Dòng tổng kết thống kê số lượng và tỷ lệ đạt (%).
 
 ---
 
-## 🚀 Hướng dẫn chạy kiểm thử dự án
+## Hướng dẫn chạy kiểm thử dự án
 
-### 1. Chạy kiểm thử có hiển thị trình duyệt (Headed mode)
+### Chạy kiểm thử có hiển thị trình duyệt
 ```powershell
 .\mvnw.cmd test
 ```
-*Chrome sẽ tự động mở lên, chạy tuần tự 16 Test Cases, tự động xuất file `KetQuaKiemThu_Login.xlsx` và sinh dữ liệu Allure.*
 
-### 2. Chạy kiểm thử ở chế độ không mở giao diện (Headless mode - Slide 60 & 63)
+### Chạy kiểm thử ở chế độ không mở giao diện (Headless mode)
 ```powershell
 .\mvnw.cmd test -Dheadless=true
 ```
 
-### 3. Mở xem Dashboard báo cáo Allure Report
+### Mở xem Dashboard báo cáo Allure Report
 ```powershell
 .\mvnw.cmd allure:serve
 ```

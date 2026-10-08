@@ -17,7 +17,39 @@ Dự án kiểm thử tự động (Automation Testing) tính năng **Đăng nh�
 - **Testing Framework:** TestNG (`v7.10.2`)
 - **Báo cáo phân tích:** Allure Report (`v2.29.0`)
 - **Xuất file Excel:** Apache POI (`v5.3.0`)
-- **Design Pattern:** Page Object Model (POM)
+- **Thư viện kiểm tra:** AssertJ (`v3.26.3` - Slide 9)
+- **Design Pattern:** Page Object Model (POM) chuẩn mực theo Slide 48
+
+---
+
+## 📁 Cấu trúc thư mục dự án chuẩn theo Slide 48
+
+```text
+6451071069_KTPM_LoginTest/
+│
+├── .mvn/                               # Cấu hình Maven Wrapper
+├── mvnw / mvnw.cmd                     # Script chạy Maven độc lập (không cần cài trước mvn)
+├── pom.xml                             # Cấu hình thư viện (Selenium 4, TestNG, Allure, AssertJ, POI)
+├── KetQuaKiemThu_Login.xlsx            # File báo cáo Excel được tự động tạo sau khi chạy test
+├── testcase.txt                        # Danh sách 16 kịch bản kiểm thử chi tiết
+├── README.md                           # Tài liệu hướng dẫn dự án
+│
+└── src/test/
+    ├── java/com/ktpm/
+    │   ├── base/                       # TẦNG CƠ SỞ (Slide 48)
+    │   │   └── BaseTest.java           # Quản lý WebDriver lifecycle, hỗ trợ Headless (Slide 10, 60)
+    │   ├── pages/                      # CÁC PAGE OBJECTS (Slide 48)
+    │   │   ├── BasePage.java           # Lớp cha giữ WebDriver, Explicit Wait (Slide 49-50)
+    │   │   └── LoginPage.java          # Page Object trang Login UTC kế thừa BasePage (Slide 51-52)
+    │   ├── tests/                      # CÁC TEST SCRIPTS (Slide 48)
+    │   │   └── LoginE2ETest.java       # Bộ 16 Test Cases tuân thủ Explicit Wait, không Thread.sleep (Slide 48, 54, 63)
+    │   ├── model/
+    │   │   └── TestCaseResult.java     # Model kết quả kiểm thử
+    │   └── utils/
+    │       └── ExcelExporter.java      # Tiện ích xuất file Excel (.xlsx) bằng Apache POI
+    └── resources/
+        └── testng.xml                  # Cấu hình Test Suite TestNG
+```
 
 ---
 
@@ -73,18 +105,20 @@ File Excel được tự động tạo/cập nhật ngay tại thư mục gốc 
 
 ---
 
-## 🚀 Hướng dẫn chạy nhanh dự án
+## 🚀 Hướng dẫn chạy kiểm thử dự án
 
-### Cách 1: Chạy trực tiếp từ file `Main.java` (Xem Chrome thao tác tự động 16 TC)
-1. Mở file `src/main/java/com/ktpm/Main.java`.
-2. Bấm nút **Run ▶️** trong IDE.
-3. Chrome sẽ tự động mở lên thực hiện tuần tự 16 Test Cases và xuất file `KetQuaKiemThu_Login.xlsx`.
-
-### Cách 2: Chạy bộ TestNG & sinh Allure Report từ Terminal
+### 1. Chạy kiểm thử có hiển thị trình duyệt (Headed mode)
 ```powershell
-# Chạy toàn bộ 16 test cases TestNG
 .\mvnw.cmd test
+```
+*Chrome sẽ tự động mở lên, chạy tuần tự 16 Test Cases, tự động xuất file `KetQuaKiemThu_Login.xlsx` và sinh dữ liệu Allure.*
 
-# Mở Allure Report xem số liệu thống kê
+### 2. Chạy kiểm thử ở chế độ không mở giao diện (Headless mode - Slide 60 & 63)
+```powershell
+.\mvnw.cmd test -Dheadless=true
+```
+
+### 3. Mở xem Dashboard báo cáo Allure Report
+```powershell
 .\mvnw.cmd allure:serve
 ```

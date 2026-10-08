@@ -43,6 +43,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- AssertJ (Slide 9 - Kiểm tra assertion dễ đọc) -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.26.3</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- WebDriverManager (dự phòng tự động tải driver nếu cần) -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
@@ -104,15 +112,6 @@
                 </configuration>
             </plugin>
 
-            <!-- Exec Maven Plugin để chạy trực tiếp Main.java qua terminal -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.5.0</version>
-                <configuration>
-                    <mainClass>com.ktpm.Main</mainClass>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 </project>

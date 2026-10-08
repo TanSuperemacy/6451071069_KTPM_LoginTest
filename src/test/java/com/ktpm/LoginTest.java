@@ -370,6 +370,39 @@ public class LoginTest {
         }
     }
 
+    @io.qameta.allure.Epic("Văn phòng điện tử UTC")
+    @io.qameta.allure.Feature("Kiểm thử Nhập liệu")
+    @io.qameta.allure.Story("TC12: Nhập mật khẩu có phân biệt chữ hoa, chữ thường")
+    @io.qameta.allure.Severity(io.qameta.allure.SeverityLevel.NORMAL)
+    @org.testng.annotations.Test(priority = 12, description = "TC12: Nhập mật khẩu có phân biệt chữ hoa, chữ thường")
+    public void testTC12_CaseSensitivePassword() {
+        String testId = "TC12";
+        String testName = "Nhập mật khẩu có phân biệt chữ hoa, chữ thường";
+        String inputData = "username: 'huongnt', password: '123456@UTC'";
+        String expected = "Báo lỗi Tài khoản hoặc mật khẩu không đúng.";
+        String actual = "";
+        String status = "FAIL";
+
+        try {
+            loginPage.enterUsername("huongnt");
+            Thread.sleep(600);
+            loginPage.enterPassword("123456@UTC");
+            Thread.sleep(600);
+            loginPage.clickLogin();
+            Thread.sleep(1200);
+
+            actual = loginPage.getErrorMessage();
+            org.testng.Assert.assertTrue(actual.contains("không đúng") || actual.contains("Tài khoản"),
+                    "Hệ thống không phân biệt chữ hoa/thường ở mật khẩu!");
+            status = "PASS";
+        } catch (Throwable t) {
+            actual = actual.isEmpty() ? ("Lỗi: " + t.getMessage()) : actual;
+            throw new RuntimeException(t);
+        } finally {
+            testResults.add(new TestCaseResult(testId, testName, inputData, expected, actual, status, java.time.LocalTime.now().format(TIME_FMT)));
+        }
+    }
+
     @AfterMethod
     public void tearDown() {
         if (driver != null) {

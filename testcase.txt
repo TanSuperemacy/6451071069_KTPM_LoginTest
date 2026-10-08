@@ -1,0 +1,186 @@
+Dưới đây là toàn bộ 16 Test Case (bao gồm 6 test case từ hình ảnh bài tập và 10 test case bổ sung) ở dạng văn bản để bạn dễ dàng copy: 
+TC1: Để trống user hoặc pass word
+•	STT: 1 
+•	ID: TC1 
+•	Description: Để trống user hoặc pass word 
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Click vào ô pass 
+3.	Nhập pass là "1256" 
+4.	Click vào nút Login 
+•	Expected Output: Bạn chưa nhập tên đăng nhập 
+TC2: Để trống mật khẩu
+•	STT: 2 
+•	ID: TC2 
+•	Description: Để trống mật khẩu
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Click vào ô username 
+3.	Nhập user là huongnt 
+4.	Click vào nút Login 
+•	Expected Output: Bạn chưa nhập mật khẩu 
+TC3: Đúng tên sai mật khẩu
+•	STT: 3 
+•	ID: TC3 
+•	Description: Đúng tên sai mật khẩu 
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Click vào ô username 
+3.	Nhập user là huongnt 
+4.	Click vào ô pass 
+5.	Nhập pass là: utc@235 
+6.	Click vào nút Login 
+•	Expected Output: Tài khoản không đúng 
+TC4: Sai tên, đúng mật khẩu
+•	STT: 4 
+•	ID: TC4 
+•	Description: Sai tên, đúng mật khẩu 
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Click vào ô username 
+3.	Nhập user là huongthunguyen 
+4.	Click vào ô pass 
+5.	Nhập pass là: 123456@utc 
+6.	Click vào nút Login 
+•	Expected Output: Tài khoản không đúng 
+TC5: Đăng nhập thành công và chọn "Giữ tôi luôn đăng nhập"
+•	STT: 5 
+•	ID: TC5 
+•	Description: Đăng nhập thành công và chọn "Giữ tôi luôn đăng nhập" 
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Click vào ô username 
+3.	Nhập user là huongnt 
+4.	Click vào ô pass 
+5.	Nhập pass là: 123456@utc 
+6.	Tích chọn "Giữ tôi luôn đăng nhập" 
+7.	Click vào nút Login 
+8.	Tắt trình duyệt và mở lại 
+•	Expected Output: Đưa vào trang chủ. Vào trang chủ 
+TC6: Đăng nhập thành công và không chọn "Giữ tôi luôn đăng nhập"
+•	STT: 6 
+•	ID: TC6 
+•	Description: Đăng nhập thành công và không chọn "Giữ tôi luôn đăng nhập" 
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Click vào ô username 
+3.	Nhập user là huongnt 
+4.	Click vào ô pass 
+5.	Nhập pass là: 123456@utc 
+6.	Click vào nút Login 
+7.	Tắt trình duyệt và mở lại 
+•	Expected Output: Đưa vào trang chủ. Vào trang đăng nhập 
+TC7: Để trống cả user và pass word
+•	STT: 7
+•	ID: TC7
+•	Description: Để trống cả user và pass word
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Để trống ô username và pass
+3.	Click vào nút Login 
+•	Expected Output: Bạn chưa nhập tên đăng nhập và mật khẩu
+TC8: Kiểm thử tấn công SQL Injection ở ô username
+•	STT: 8
+•	ID: TC8
+•	Description: Kiểm thử tấn công SQL Injection ở ô username
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Click vào ô username 
+3.	Nhập user là ' OR '1'='1
+4.	Click vào ô pass 
+5.	Nhập pass là: 123
+6.	Click vào nút Login 
+•	Expected Output: Tài khoản không đúng (không cho phép vượt qua xác thực) 
+TC9: Kiểm thử tấn công SQL Injection dạng Comment ở ô username
+•	STT: 9
+•	ID: TC9
+•	Description: Kiểm thử tấn công SQL Injection dạng Comment ở ô username
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Click vào ô username 
+3.	Nhập user là admin' --
+4.	Click vào ô pass 
+5.	Nhập pass bất kỳ
+6.	Click vào nút Login 
+•	Expected Output: Tài khoản không đúng 
+TC10: Nhập username có khoảng trắng ở đầu hoặc cuối
+•	STT: 10
+•	ID: TC10
+•	Description: Nhập username có khoảng trắng ở đầu hoặc cuối
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Click vào ô username 
+3.	Nhập user là huongnt
+4.	Click vào ô pass 
+5.	Nhập pass là: 123456@utc 
+6.	Click vào nút Login 
+•	Expected Output: Hệ thống tự loại bỏ khoảng trắng dư thừa và đưa vào trang chủ 
+TC11: Nhập tên đăng nhập phân biệt chữ hoa, chữ thường
+•	STT: 11
+•	ID: TC11
+•	Description: Nhập tên đăng nhập phân biệt chữ hoa, chữ thường
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Click vào ô username 
+3.	Nhập user là HuongNT
+4.	Click vào ô pass 
+5.	Nhập pass là: 123456@utc 
+6.	Click vào nút Login 
+•	Expected Output: Đưa vào trang chủ (nếu không phân biệt hoa/thường) hoặc báo Tài khoản không đúng 
+TC12: Nhập mật khẩu có phân biệt chữ hoa, chữ thường
+•	STT: 12
+•	ID: TC12
+•	Description: Nhập mật khẩu có phân biệt chữ hoa, chữ thường
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Click vào ô username 
+3.	Nhập user là huongnt 
+4.	Click vào ô pass 
+5.	Nhập pass là: 123456@UTC
+6.	Click vào nút Login 
+•	Expected Output: Tài khoản không đúng 
+TC13: Kiểm thử ẩn/hiện ký tự ở ô mật khẩu
+•	STT: 13
+•	ID: TC13
+•	Description: Kiểm thử ẩn/hiện ký tự ở ô mật khẩu
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Click vào ô pass 
+3.	Nhập pass bất kỳ
+4.	Quan sát các ký tự vừa nhập
+•	Expected Output: Mật khẩu được mã hóa hiển thị ở dạng dấu chấm (•) hoặc dấu sao (*)
+TC14: Kiểm thử tấn công XSS ở ô username
+•	STT: 14
+•	ID: TC14
+•	Description: Kiểm thử tấn công XSS ở ô username
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Click vào ô username 
+3.	Nhập user là <script>alert('XSS')</script>
+4.	Click vào ô pass 
+5.	Nhập pass bất kỳ
+6.	Click vào nút Login 
+•	Expected Output: Tài khoản không đúng (không thực thi mã script thông báo) 
+TC15: Nhập chuỗi ký tự quá dài vào ô username và password
+•	STT: 15
+•	ID: TC15
+•	Description: Nhập chuỗi ký tự quá dài vào ô username và password
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Click vào ô username 
+3.	Nhập chuỗi gồm 255 ký tự
+4.	Click vào ô pass 
+5.	Nhập chuỗi gồm 255 ký tự
+6.	Click vào nút Login 
+•	Expected Output: Thông báo lỗi độ dài hoặc không cho phép nhập tiếp vượt quá giới hạn
+TC16: Kiểm thử tính năng Paste vào ô password
+•	STT: 16
+•	ID: TC16
+•	Description: Kiểm thử tính năng Paste vào ô password
+•	Steps:
+1.	Mở trang vanphongdientu.utc.edu.vn 
+2.	Thực hiện copy chuỗi 123456@utc từ ngoài 
+3.	Click vào ô pass 
+4.	Dán (Ctrl + V) vào ô pass
+•	Expected Output: Chuỗi mật khẩu được dán thành công vào ô password
+

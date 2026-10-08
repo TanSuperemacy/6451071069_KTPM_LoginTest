@@ -45,6 +45,33 @@ public class LoginTest {
         loginPage.open();
     }
 
+    @org.testng.annotations.Test(priority = 1, description = "TC1: Để trống user hoặc pass word")
+    public void testTC1_EmptyUsername() {
+        String testId = "TC1";
+        String testName = "Để trống user hoặc pass word";
+        String inputData = "username: '', password: '1256'";
+        String expected = "Bạn chưa nhập tên đăng nhập";
+        String actual = "";
+        String status = "FAIL";
+
+        try {
+            loginPage.enterPassword("1256");
+            Thread.sleep(800);
+            loginPage.clickLogin();
+            Thread.sleep(1200);
+
+            actual = loginPage.getErrorMessage();
+            org.testng.Assert.assertTrue(actual.contains("Bạn chưa nhập tên đăng nhập") || actual.contains("tên đăng nhập"),
+                    "Thông báo lỗi không đúng khi để trống username!");
+            status = "PASS";
+        } catch (Throwable t) {
+            actual = actual.isEmpty() ? ("Lỗi: " + t.getMessage()) : actual;
+            throw new RuntimeException(t);
+        } finally {
+            testResults.add(new TestCaseResult(testId, testName, inputData, expected, actual, status, java.time.LocalTime.now().format(TIME_FMT)));
+        }
+    }
+
     @AfterMethod
     public void tearDown() {
         if (driver != null) {

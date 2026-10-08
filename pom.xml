@@ -15,6 +15,8 @@
         <selenium.version>4.27.0</selenium.version>
         <testng.version>7.10.2</testng.version>
         <webdrivermanager.version>5.9.2</webdrivermanager.version>
+        <allure.version>2.29.0</allure.version>
+        <allure.maven.version>2.12.0</allure.maven.version>
     </properties>
 
     <dependencies>
@@ -30,6 +32,14 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Allure TestNG để sinh báo cáo số liệu chuyên nghiệp -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -77,6 +87,20 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+
+            <!-- Allure Maven Plugin để sinh báo cáo số liệu HTML -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure.maven.version}</version>
+                <configuration>
+                    <reportVersion>${allure.version}</reportVersion>
+                    <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
                 </configuration>
             </plugin>
 

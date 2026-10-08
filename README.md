@@ -1,6 +1,6 @@
 # 6451071069_KTPM_LoginTest
 
-Dự án kiểm thử tự động tính năng **Đăng nhập (Login)** cho hệ thống **Văn phòng điện tử Trường ĐH Giao Thông Vận Tải (UTC)** sử dụng **Java**, **Selenium WebDriver**, **TestNG** và tự động xuất báo cáo kết quả ra file **Excel (.xlsx)** bằng **Apache POI**.
+Dự án kiểm thử tự động (Automation Testing) tính năng **Đăng nhập (Login)** cho hệ thống **Văn phòng điện tử Trường ĐH Giao Thông Vận Tải (UTC)** sử dụng **Java**, **Selenium WebDriver**, **TestNG**, xuất báo cáo **Excel (.xlsx)** bằng **Apache POI** và báo cáo phân tích số liệu trực quan với **Allure Report**.
 
 ---
 
@@ -10,79 +10,81 @@ Dự án kiểm thử tự động tính năng **Đăng nhập (Login)** cho h�
 
 ---
 
-## 🛠️ Công nghệ sử dụng
+## 🛠️ Công nghệ & Thư viện sử dụng
 - **Ngôn ngữ:** Java 21 (LTS)
-- **Công cụ build:** Maven (tích hợp sẵn Maven Wrapper `mvnw`)
-- **Kiểm thử tự động:** Selenium WebDriver (v4.27.0)
-- **Testing Framework:** TestNG (v7.10.2)
-- **Xuất báo cáo Excel:** Apache POI (v5.3.0)
+- **Công cụ build:** Apache Maven (đã tích hợp sẵn Maven Wrapper `mvnw`)
+- **Kiểm thử tự động:** Selenium WebDriver (`v4.27.0`)
+- **Testing Framework:** TestNG (`v7.10.2`)
+- **Báo cáo phân tích:** Allure Report (`v2.29.0`)
+- **Xuất file Excel:** Apache POI (`v5.3.0`)
 - **Design Pattern:** Page Object Model (POM)
 
 ---
 
-## 📁 Cấu trúc thư mục dự án
+## 📋 Danh sách 16 Test Cases & Lịch sử Git Commit
 
-```text
-6451071069_KTPM_LoginTest/
-│
-├── .mvn/                             # Cấu hình Maven Wrapper
-├── mvnw / mvnw.cmd                   # Script chạy Maven độc lập (không cần cài trước mvn)
-├── pom.xml                           # Cấu hình thư viện (Selenium, TestNG, Apache POI)
-├── KetQuaKiemThu_Login.xlsx          # File báo cáo Excel được tự động tạo sau khi chạy test
-├── README.md                         # Hướng dẫn chi tiết
-│
-├── src/
-│   ├── main/
-│   │   └── java/com/ktpm/
-│   │       ├── Main.java             # Chạy trực tiếp để xem Chrome tự thao tác và xuất Excel
-│   │       ├── model/
-│   │       │   └── TestCaseResult.java # Model lưu trữ kết quả kiểm thử
-│   │       ├── pages/
-│   │           └── LoginPage.java    # Page Object Model cho trang Login UTC
-│   │       └── utils/
-│   │           └── ExcelExporter.java # Tiện ích định dạng và xuất báo cáo Excel (.xlsx)
-│   │
-│   └── test/
-│       ├── java/com/ktpm/
-│       │   └── LoginTest.java        # Bộ kịch bản TestNG (tự động xuất Excel sau khi test xong)
-│       └── resources/
-│           └── testng.xml            # Cấu hình Suite TestNG
-```
+Mỗi Test Case được quản lý độc lập theo từng commit riêng biệt trên Git theo đúng chuẩn quy trình kiểm thử:
+
+| STT | Mã TC | Tên Kịch Bản Kiểm Thử | Dữ Liệu Đầu Vào | Kết Quả Mong Đợi | Trạng Thái | Git Commit |
+| :---: | :---: | :--- | :--- | :--- | :---: | :--- |
+| 1 | **TC1** | Để trống user hoặc pass word | `user: ''`, `pass: '1256'` | Báo lỗi: *"Bạn chưa nhập tên đăng nhập"* | **PASS** | `test(TC1): kiem thu de trong user hoac pass word` |
+| 2 | **TC2** | Để trống mật khẩu | `user: 'huongnt'`, `pass: ''` | Báo lỗi: *"Bạn chưa nhập mật khẩu"* | **PASS** | `test(TC2): kiem thu de trong mat khau` |
+| 3 | **TC3** | Đúng tên sai mật khẩu | `user: 'huongnt'`, `pass: 'utc@235'` | Báo lỗi: *"Tài khoản hoặc mật khẩu không đúng."* | **PASS** | `test(TC3): kiem thu dung ten dang nhap sai mat khau` |
+| 4 | **TC4** | Sai tên, đúng mật khẩu | `user: 'huongthunguyen'`, `pass: '123456@utc'` | Báo lỗi: *"Tài khoản hoặc mật khẩu không đúng."* | **PASS** | `test(TC4): kiem thu sai ten dang nhap dung mat khau` |
+| 5 | **TC5** | Đăng nhập và chọn "Giữ tôi luôn đăng nhập" | `user: 'huongnt'`, `pass: '123456@utc'`, checkbox: `true` | Ghi nhớ phiên và chuyển hướng trang chủ | **PASS** | `test(TC5): kiem thu dang nhap va chon giu toi luon dang nhap` |
+| 6 | **TC6** | Đăng nhập không chọn "Giữ tôi luôn đăng nhập" | `user: 'huongnt'`, `pass: '123456@utc'`, checkbox: `false` | Đăng nhập bình thường không lưu phiên | **PASS** | `test(TC6): kiem thu dang nhap khong chon giu toi luon dang nhap` |
+| 7 | **TC7** | Để trống cả user và pass word | `user: ''`, `pass: ''` | Báo lỗi: *"Bạn chưa nhập tên đăng nhập"* | **PASS** | `test(TC7): kiem thu de trong ca user va pass word` |
+| 8 | **TC8** | Tấn công SQL Injection ở ô username | `user: '' OR '1'='1'`, `pass: '123'` | Hệ thống chặn, báo lỗi không cho bypass | **PASS** | `test(TC8): kiem thu tan cong SQL Injection o o username` |
+| 9 | **TC9** | Tấn công SQL Injection dạng Comment | `user: 'admin\' --'`, `pass: '123456'` | Hệ thống chặn, báo lỗi không cho bypass | **PASS** | `test(TC9): kiem thu tan cong SQL Injection dang Comment o o username` |
+| 10 | **TC10** | Username có khoảng trắng ở đầu hoặc cuối | `user: '  huongnt  '`, `pass: '123456@utc'` | Hệ thống tự động trim khoảng trắng hoặc xử lý an toàn | **PASS** | `test(TC10): kiem thu username co khoang trang o dau hoac cuoi` |
+| 11 | **TC11** | Username phân biệt chữ hoa, chữ thường | `user: 'HuongNT'`, `pass: '123456@utc'` | Hệ thống xác thực chữ hoa/thường an toàn | **PASS** | `test(TC11): kiem thu phan biet chu hoa chu thuong o o username` |
+| 12 | **TC12** | Mật khẩu phân biệt chữ hoa, chữ thường | `user: 'huongnt'`, `pass: '123456@UTC'` | Báo lỗi: *"Tài khoản hoặc mật khẩu không đúng."* | **PASS** | `test(TC12): kiem thu phan biet chu hoa chu thuong o o password` |
+| 13 | **TC13** | Kiểm thử ẩn/hiện ký tự ở ô mật khẩu | `pass: 'SecretPass123'` | Ô pass có thuộc tính `type="password"`, ký tự bị ẩn | **PASS** | `test(TC13): kiem thu an hien ky tu o o mat khau` |
+| 14 | **TC14** | Tấn công XSS ở ô username | `user: '<script>alert("XSS")</script>'` | Không thực thi alert script, báo lỗi an toàn | **PASS** | `test(TC14): kiem thu phong chong tan cong XSS o o username` |
+| 15 | **TC15** | Nhập chuỗi ký tự quá dài (255 ký tự) | `user: 255 ký tự`, `pass: 255 ký tự` | Không crash server (lỗi 500), xử lý an toàn | **PASS** | `test(TC15): kiem thu nhap chuoi ky tu qua dai 255 ky tu` |
+| 16 | **TC16** | Kiểm thử tính năng Paste vào ô password | Dán chuỗi `123456@utc` | Dán thành công vào ô password | **PASS** | `test(TC16): kiem thu tinh nang Paste vao o password` |
 
 ---
 
-## 🧪 Các kịch bản kiểm thử (Test Cases)
+## 📊 1. Báo cáo số liệu với Allure Report
 
-| Mã TC | Tên Kịch Bản | Dữ Liệu Đầu Vào | Kết Quả Mong Đợi | Trạng Thái |
-| :---: | :--- | :--- | :--- | :---: |
-| **TC01** | Kiểm tra mở trang đăng nhập UTC | URL: `vanphongdientu.utc.edu.vn/Login` | Mở trang thành công, tiêu đề hợp lệ | **PASS** |
-| **TC02** | Kiểm thử để trống tên đăng nhập | `username: ""` <br> `password: "matkhautest123"` | Báo lỗi: *"Bạn chưa nhập tên đăng nhập"* | **PASS** |
-| **TC03** | Kiểm thử để trống mật khẩu | `username: "6451071069"` <br> `password: ""` | Báo lỗi: *"Bạn chưa nhập mật khẩu"* | **PASS** |
-| **TC04** | Kiểm thử đăng nhập sai tài khoản hoặc mật khẩu | `username: "sinhvien_utc_sai"` <br> `password: "matkhausai999"` | Báo lỗi: *"Tài khoản hoặc mật khẩu không đúng."* | **PASS** |
+Dự án đã tích hợp **Allure Report** giúp xem biểu đồ thống kê, tỷ lệ Pass/Fail, thời gian thực thi của từng test case:
 
----
-
-## 📊 File báo cáo Excel kết quả (`KetQuaKiemThu_Login.xlsx`)
-File Excel được thiết kế chuẩn báo cáo môn học KTPM:
-- **Tiêu đề báo cáo:** BÁO CÁO KẾT QUẢ KIỂM THỬ TỰ ĐỘNG - LOGIN TEST
-- **Thông tin:** Tên hệ thống, Mã sinh viên `6451071069`, Ngày giờ thực hiện
-- **Bảng chi tiết:** STT/Mã TC, Tên kịch bản, Dữ liệu đầu vào, Kết quả mong đợi, Kết quả thực tế, Trạng thái (được tô màu xanh lá **PASS** hoặc màu đỏ **FAIL**), Thời gian chạy.
-- **Thống kê:** Tổng số Test Case, số ca PASS, số ca FAIL, tỷ lệ đạt (%).
-
----
-
-## 🚀 Cách bấm chạy để xuất file Excel
-
-### Cách 1: Chạy trực tiếp từ file `Main.java`
-- Mở file [`Main.java`](file:///c:/Users/HP/Documents/Bai%20tap%20va%201%20so%20file%20j%20do/ktpm/logintest/src/main/java/com/ktpm/Main.java).
-- Bấm nút **Run ▶️** (hình tam giác màu xanh).
-- Chrome sẽ tự bật lên chạy đủ 4 kịch bản và tự tạo file [`KetQuaKiemThu_Login.xlsx`](file:///c:/Users/HP/Documents/Bai%20tap%20va%201%20so%20file%20j%20do/ktpm/logintest/KetQuaKiemThu_Login.xlsx) ngay tại thư mục gốc.
-
-### Cách 2: Chạy từ Terminal
+### Bước 1: Chạy kiểm thử để sinh dữ liệu Allure
 ```powershell
 .\mvnw.cmd test
 ```
-hoặc:
+*(Dữ liệu kết quả sẽ tự động lưu vào thư mục `target/allure-results`)*
+
+### Bước 2: Bật trang báo cáo Allure Report trên trình duyệt
 ```powershell
-.\mvnw.cmd compile exec:java
+.\mvnw.cmd allure:serve
+```
+> Lệnh này sẽ tự động khởi động một web server nội bộ và mở trang Dashboard của Allure trên trình duyệt (có biểu đồ tròn, timeline và chi tiết từng step của 16 kịch bản).
+
+---
+
+## 📑 2. Báo cáo kết quả ra file Excel (`KetQuaKiemThu_Login.xlsx`)
+File Excel được tự động tạo/cập nhật ngay tại thư mục gốc với các thông tin:
+- Tiêu đề báo cáo và thông tin Mã sinh viên: **6451071069**.
+- Chi tiết từng kịch bản, dữ liệu đầu vào, kết quả mong đợi, kết quả thực tế, thời gian chạy.
+- Các ô trạng thái được tô màu trực quan (**PASS** màu xanh lá, **FAIL** màu đỏ).
+- Dòng tổng kết thống kê số lượng và tỷ lệ đạt (%).
+
+---
+
+## 🚀 Hướng dẫn chạy nhanh dự án
+
+### Cách 1: Chạy trực tiếp từ file `Main.java` (Xem Chrome thao tác tự động 16 TC)
+1. Mở file `src/main/java/com/ktpm/Main.java`.
+2. Bấm nút **Run ▶️** trong IDE.
+3. Chrome sẽ tự động mở lên thực hiện tuần tự 16 Test Cases và xuất file `KetQuaKiemThu_Login.xlsx`.
+
+### Cách 2: Chạy bộ TestNG & sinh Allure Report từ Terminal
+```powershell
+# Chạy toàn bộ 16 test cases TestNG
+.\mvnw.cmd test
+
+# Mở Allure Report xem số liệu thống kê
+.\mvnw.cmd allure:serve
 ```
